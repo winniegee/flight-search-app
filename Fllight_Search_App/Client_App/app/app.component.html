@@ -1,0 +1,83 @@
+﻿<div class="container-fluid" style="background:url('../../Content/leonardo-yip-rn-NLirHQPY-unsplash.jpg') center center;height:200vh">
+    <div class="container">
+        <div class="row pt-1 pb-1">
+            <div class="col-lg-12">
+                <h4 class="text-center" style="color:ghostwhite;font-family:'Times New Roman', Times, serif;font:200;">Search Flights below</h4>
+            </div>
+        </div>
+    </div>
+    <section class="search-sec" style="padding-top:150px;background-color:transparent">
+        <div class="container">
+            <form action="#" method="post" novalidate="novalidate">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-3 col-sm-12 p-0">
+                                <input type="text" list="iataList" class="form-control search-slt" placeholder="Departure City" name="list" [(ngModel)]="depCity" (keyup)="onCodeChange(depCity)" />
+                                <datalist id="iataList">
+                                    <select>
+                                        <option *ngFor="let code of codes" value="{{code.name}} ({{code.code}})"></option>
+                                    </select>
+                                </datalist>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-12 p-0">
+                                <input type="text" list="iataLists" class="form-control search-slt" placeholder="Destination City" name="lists" [(ngModel)]="desCity" (keyup)="onCodeChange(desCity)" />
+                                <datalist id="iataLists">
+                                    <select>
+                                        <option *ngFor="let code of codes" value="{{code.name}} ({{code.code}})" name="destination"></option>
+                                    </select>
+                                </datalist>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-12 p-0">
+                                <input type="text" (ngModelChange)="onDateChange($event)" onfocus="(this.type='date')" [min]="minDepartureDate" onblur="(this.type='text')" class="form-control search-slt" placeholder="Departure Date" [(ngModel)]="depDate" name="fdate">
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-12 p-0">
+                                <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [min]="minReturnDate" class="form-control search-slt" placeholder="Return Date" [(ngModel)]="retDate" name="ldate">
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                                <select class="form-control search-slt" [(ngModel)]="search_param.cabin" name="cabin">
+                                    <option id="0">Cabin Class</option>
+                                    <option>First</option>
+                                    <option>Economy</option>
+                                    <option>Premium</option>
+                                    <option>Business</option>
+                                    <option>All</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-12 p-1 ">
+                                <input type="number" min="1" max="9" onKeyDown="return false" placeholder="No of Adults(age>12yrs)" class="form-control search-slt" [(ngModel)]="search_param.no_of_adult" name="adult" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-12 p-1">
+                                <input type="number" min="1" max="9" onKeyDown="return false" placeholder="No of Children(2-12yrs)" class="form-control search-slt" [(ngModel)]="search_param.no_of_child" name="childrenNo" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-12 p-1">
+                                <input type="number" min="1" max="9" onKeyDown="return false" placeholder="No of infants(0-2yrs)" class="form-control search-slt" [(ngModel)]="search_param.no_of_infant" name="infant" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-12 p-1">
+                                <button type="button" class="btn btn-danger wrn-btn" (click)="onSubmit()">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <section class="search-sec" style="padding-top:50px;background-color:transparent" *ngIf="result">
+        <div class="container">
+            <h3 style="color:white">Flight Results</h3>
+            <div class="row" *ngFor="let r of result">
+                <h2 style="color:white">Departure Date and Time: {{r.departure.date}} {{r.departure.time}}</h2>
+                <h2 style="color:white">Airport:  {{r.departure.airport.name}}</h2>
+                <h2 style="color:white">Arrival Date and Time: {{r.arrival.date}} {{r.arrival.time}}</h2>
+                <h2 style="color:white">Airport:  {{r.arrival.airport.name }}</h2><br />
+                <h2 style="color:white">Airline:  {{r.operating_airline.name }}</h2><br /><br />
+            </div>
+        </div>
+    </section>
+    <section class="search-sec" style="padding-top:50px;background-color:transparent" *ngIf="errors">
+        <div class="container">
+                <h2 style="color:white">{{errors}}</h2>
+            
+            </div>
+</section>
+        </div>
